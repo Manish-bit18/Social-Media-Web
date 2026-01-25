@@ -19,7 +19,6 @@ const PostList = () => {
         <Post key={post.id} post={post}></Post>
       ))}
     </>
-
   );
 }
 export default PostList;
