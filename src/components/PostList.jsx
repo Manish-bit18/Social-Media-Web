@@ -1,24 +1,22 @@
-import WelcomeMessage from "./WelcomeMessage.jsx"; ``
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Post from "./Post";
-import { PostList as PostListdata } from "../store/post-list-store.jsx";
+import { PostList as PostListData } from "../store/post-list-store";
+import WelcomeMessage from "./WelcomeMessage";
+import LoadingSpinner from "./LoadingSpinner";
 
 const PostList = () => {
+  const [postList, fetching] = useState(PostListData);
 
-  const { postList } = useContext(PostListdata);
-  const handleGetPostsClick = () => {
-   fetch('https://dummyjson.com/posts')
-   .then(res => res.json())
-   .then(console.log);
-  }
   return (
     <>
-      {postList.length === 0 && 
-      <WelcomeMessage ongetpostClick={handleGetPostsClick}></WelcomeMessage>}
-      {postList.map((post) => (
-        <Post key={post.id} post={post}></Post>
+    {fetching && <LoadingSpinner></LoadingSpinner>}
+      {!fetching && postList.length === 0 && <WelcomeMessage />}
+      {!fetching && postList.map((post) => (
+        <Post key={post.id} post={post} />
       ))}
     </>
   );
-}
+};
+
 export default PostList;
+ 
